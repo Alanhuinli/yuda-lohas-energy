@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>育達樂活能量飲 YUDA LOHAS｜能量補充在舉手之間</title>
+  <meta name="description" content="育達樂活能量飲專為苗栗地區年輕族群打造，結合大湖莓果、公館紅棗、東方美人茶韻與清爽微氣泡，解決日常趕課、通勤、社團與運動須隨手補充能量的需求。能量補充在舉手之間！">
+
+  <!-- Open Graph 社群分享預覽標籤 -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:site_name" content="育達樂活能量飲 YUDA LOHAS">
+  <meta property="og:title" content="育達樂活能量飲｜能量補充在舉手之間">
+  <meta property="og:description" content="專為苗栗年輕世代打造的清爽果韻與零糖機能能量飲！探索 8 款在地靈感口味，線上建立預購明細享限時優惠。">
+  <meta property="og:url" content="https://yuda-lohas-energy.vercel.app/">
+  <meta property="og:image" content="images/hero-energy.jpg">
+  <meta property="og:image:alt" content="育達樂活能量飲三款修長鋁罐與冰塊水花商業視覺">
+
+  <!-- Twitter Card 標籤 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="育達樂活能量飲｜能量補充在舉手之間">
+  <meta name="twitter:description" content="專為苗栗年輕族群打造的隨手充電站，清爽果韻微氣泡、零糖 BCAA 機能選擇，一開即充！">
+  <meta name="twitter:image" content="images/hero-energy.jpg">
+
+  <!-- 內嵌品牌閃電 SVG 圖示（純本地無外部請求） -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1d24'/%3E%3Cpath d='M36 8L14 36h16l-4 20 24-28H34l2-20z' fill='%23ff5a1f'/%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳至主要內容</a>
+
+  <!-- 限時活動倒數橫幅 -->
+  <aside id="promo-banner" class="promo-banner" aria-label="限時優惠活動資訊">
+    <div class="container promo-inner">
+      <div class="promo-info">
+        <span id="promo-badge" class="promo-status-badge">進行中</span>
+        <p id="promo-title" class="promo-title">苗栗青年開罐季｜全系列預購限時 88 折（示例活動）</p>
+      </div>
+
+      <div id="promo-countdown" class="promo-countdown" role="timer" aria-live="off" aria-label="活動剩餘時間">
+        <div class="time-box">
+          <span id="cd-days" class="time-num">00</span>
+          <span class="time-unit">天</span>
+        </div>
+        <span class="time-sep" aria-hidden="true">:</span>
+        <div class="time-box">
+          <span id="cd-hours" class="time-num">00</span>
+          <span class="time-unit">時</span>
+        </div>
+        <span class="time-sep" aria-hidden="true">:</span>
+        <div class="time-box">
+          <span id="cd-minutes" class="time-num">00</span>
+          <span class="time-unit">分</span>
+        </div>
+        <span class="time-sep" aria-hidden="true">:</span>
+        <div class="time-box">
+          <span id="cd-seconds" class="time-num">00</span>
+          <span class="time-unit">秒</span>
+        </div>
+      </div>
+
+      <div class="promo-code-group">
+        <span class="promo-code-label">優惠碼：<strong id="promo-code-text">YUDA88</strong></span>
+        <button type="button" id="copy-promo-btn" class="btn btn-promo-copy">複製優惠碼</button>
+      </div>
+    </div>
+    <p id="promo-feedback" class="promo-feedback sr-live" aria-live="polite"></p>
+  </aside>
+
+  <!-- 網站導覽列 -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand-logo" aria-label="育達樂活能量飲首頁">
+        <span class="logo-icon" aria-hidden="true">⚡</span>
+        <span class="logo-text-wrap">
+          <span class="logo-zh">育達樂活能量飲</span>
+          <span class="logo-en">YUDA LOHAS ENERGY</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <a href="#preorder" class="cart-pill" aria-label="前往預購清單">
+          <span aria-hidden="true">🛒</span>
+          <span>預購單</span>
+          <span id="nav-cart-count" class="cart-count-badge">0</span>
+        </a>
+
+        <button
+          type="button"
+          id="menu-toggle"
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="展開選單"
+        >
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="menu-toggle-text">選單</span>
+        </button>
+      </div>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="主導覽選單">
+        <ul class="nav-list">
+          <li><a href="#brand-story" class="nav-link">認識品牌</a></li>
+          <li><a href="#catalog" class="nav-link">看商品</a></li>
+          <li><a href="#reviews" class="nav-link">顧客口碑</a></li>
+          <li><a href="#faq" class="nav-link">常見問題</a></li>
+          <li><a href="#preorder" class="nav-link">預購清單</a></li>
+          <li><a href="#contact" class="nav-link">聯絡資訊</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- 首屏主視覺 Hero -->
+    <section id="top" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">📍 苗栗年輕族群專屬・隨手活力補給站</p>
+          <h1 class="hero-title">能量補充，<br><span class="text-highlight">在舉手之間。</span></h1>
+          <p class="hero-subtitle">
+            早八趕課、竹南頭份通勤、社團熱舞或山海夜衝，疲憊隨時來襲？
+            <strong>育達樂活能量飲</strong>將苗栗在地果茶靈感與清爽微氣泡裝進 330ml 修長鋁罐，告別傳統厚重藥水味，隨手一開即刻滿電！
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#catalog" class="btn btn-primary btn-lg">看商品</a>
+            <a href="#brand-story" class="btn btn-outline-light btn-lg">認識品牌</a>
+          </div>
+
+          <dl class="hero-stats" aria-label="品牌特色指標（示例數據）">
+            <div class="stat-item">
+              <dt>隨手修長鋁罐</dt>
+              <dd>330ml</dd>
+            </div>
+            <div class="stat-item">
+              <dt>在地靈感風味</dt>
+              <dd>8 款特調</dd>
+            </div>
+            <div class="stat-item">
+              <dt>校園試飲好評（示例）</dt>
+              <dd>96%</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-visual">
+          <img
+            src="images/hero-energy.jpg"
+            alt="育達樂活能量飲三款修長金屬鋁罐在冰塊與清澈水花中飛濺的商業廣告攝影"
+            class="hero-img"
+            width="1280"
+            height="720"
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- 品牌故事區塊 -->
+    <section id="brand-story" class="section story-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">BRAND STORY</span>
+          <h2 class="section-title">從苗栗山海出發，重新定義年輕世代的能量飲</h2>
+          <p class="section-lead">
+            為什麼補充能量一定要忍受刺鼻的化學藥水味與高糖負擔？我們走訪造橋校園、苗栗市街與竹南海線，傾聽年輕族群最真實的日常節奏。
+          </p>
+        </div>
+
+        <div class="story-cards">
+          <article class="story-card">
+            <div class="story-icon" aria-hidden="true">🍓</div>
+            <h3>苗栗風土果茶入罐</h3>
+            <p>汲取大湖草莓、公館紅棗、卓蘭白柚與東方美人茶韻等在地風味靈感，結合細緻碳酸氣泡，每一口都像現調精品果茶般順口清爽。</p>
+          </article>
+
+          <article class="story-card">
+            <div class="story-icon" aria-hidden="true">⚡</div>
+            <h3>能量補充在舉手之間</h3>
+            <p>專為背包側袋、機車前置物格與單手握持設計的 330ml 霧面修長鋁罐。不必沖泡、不必排隊買咖啡，拉開拉環就能隨手充電。</p>
+          </article>
+
+          <article class="story-card">
+            <div class="story-icon" aria-hidden="true">🌿</div>
+            <h3>透明分級・零卡輕盈可選</h3>
+            <p>從 45mg 溫和茶韻到 120mg 雙倍動能清楚標示，更推出 0 糖 0 卡與 2000mg BCAA 運動機能款，讓飲控族與健身族毫無罪惡感。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 商品型錄區塊（分類篩選 + 即時搜尋 + 詳情彈窗） -->
+    <section id="catalog" class="section catalog-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">PRODUCT CATALOG</span>
+          <h2 class="section-title">全系列能量飲型錄</h2>
+          <p class="section-lead">三大機能分類、八款棚拍級特調風味。可同時搭配「分類篩選」與「關鍵字即時搜尋」快速找到你的命定充電罐！（價格與營養資訊為示例）</p>
+        </div>
+
+        <!-- 篩選與搜尋控制列 -->
+        <div class="catalog-controls">
+          <div class="search-box">
+            <label for="product-search" class="search-label">搜尋商品</label>
+            <div class="search-input-wrap">
+              <input
+                type="search"
+                id="product-search"
+                class="search-input"
+                placeholder="輸入口味或特色（如：莓果、紅棗、零糖、BCAA）..."
+                autocomplete="off"
+              >
+              <button type="button" id="clear-search-btn" class="btn-clear-input" hidden aria-label="清除搜尋關鍵字">✕</button>
+            </div>
+          </div>
+
+          <div class="category-filter-wrap">
+            <span class="filter-label" id="category-group-label">分類篩選</span>
+            <div id="category-buttons" class="category-buttons" role="group" aria-labelledby="category-group-label">
+              <!-- 由 js/app.js 動態產生分類按鈕 -->
+            </div>
+          </div>
+        </div>
+
+        <p id="catalog-result-info" class="catalog-result-info" aria-live="polite"></p>
+
+        <!-- 商品卡片網格 -->
+        <div id="product-grid" class="product-grid">
+          <!-- 由 js/app.js 使用 textContent 安全渲染 -->
+        </div>
+
+        <!-- 查無商品狀態 -->
+        <div id="empty-search-state" class="empty-state" hidden>
+          <p class="empty-icon" aria-hidden="true">🔍</p>
+          <h3 class="empty-title">找不到符合條件的能量飲</h3>
+          <p class="empty-desc">目前沒有同時符合所選分類與搜尋關鍵字的商品，試著換個關鍵字或重設篩選條件吧！</p>
+          <button type="button" id="reset-filter-btn" class="btn btn-secondary">清除搜尋與篩選條件</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 顧客口碑評價區塊 -->
+    <section id="reviews" class="section reviews-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">LOCAL REVIEWS</span>
+          <h2 class="section-title">苗栗年輕族群真實情境好評</h2>
+          <p class="section-lead">聽聽校園設計系學生、熱舞社團與竹南園區夥伴怎麼說（以下顧客評價均為品牌情境示例）。</p>
+        </div>
+
+        <div id="reviews-grid" class="reviews-grid">
+          <!-- 由 js/app.js 讀取 js/data.js 渲染 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 常見問題 FAQ 區塊 -->
+    <section id="faq" class="section faq-section">
+      <div class="container faq-container">
+        <div class="section-header">
+          <span class="section-tag">FAQ</span>
+          <h2 class="section-title">常見問題</h2>
+          <p class="section-lead">支援鍵盤 Tab 切換與 Enter／空白鍵展開收合（以下問答內容包含品牌營運示例說明）。</p>
+        </div>
+
+        <div id="faq-list" class="faq-list">
+          <!-- 由 js/app.js 讀取 js/data.js 渲染四個常見問題 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 線上預購清單與明細匯出區塊 -->
+    <section id="preorder" class="section preorder-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">QUICK PRE-ORDER</span>
+          <h2 class="section-title">隨手預購清單＆明細產生器</h2>
+          <p class="section-lead">
+            免註冊帳號、不經過後端金流！系統會以瀏覽器本地記憶保存您的挑選品項，一鍵複製明細或下載 <code>.txt</code> 貼至官方 LINE 或 IG 即可完成登記。
+          </p>
+        </div>
+
+        <div class="preorder-layout">
+          <!-- 左側：購物車清單與金額計算 -->
+          <div class="preorder-cart-panel">
+            <div class="panel-head">
+              <h3>1. 已選能量飲品項</h3>
+              <button type="button" id="clear-cart-btn" class="btn-text-danger" hidden>清空清單</button>
+            </div>
+
+            <div id="cart-empty-msg" class="cart-empty-msg">
+              <p>目前預購清單還是空的喔！</p>
+              <a href="#catalog" class="btn btn-secondary">前往商品型錄挑選</a>
+            </div>
+
+            <ul id="cart-items-list" class="cart-items-list" hidden>
+              <!-- 由 js/app.js 動態渲染 -->
+            </ul>
+
+            <!-- 優惠碼與金額試算 -->
+            <div class="cart-pricing-box">
+              <div class="coupon-row">
+                <label for="coupon-input" class="coupon-label">優惠碼折抵</label>
+                <div class="coupon-controls">
+                  <input
+                    type="text"
+                    id="coupon-input"
+                    class="coupon-input"
+                    placeholder="輸入 YUDA88"
+                    maxlength="20"
+                  >
+                  <button type="button" id="apply-coupon-btn" class="btn btn-secondary btn-sm">套用</button>
+                </div>
+                <p id="coupon-status-msg" class="coupon-status-msg" aria-live="polite"></p>
+              </div>
+
+              <div class="price-summary-rows">
+                <div class="price-row">
+                  <span>商品總數</span>
+                  <span id="summary-total-qty">0 罐</span>
+                </div>
+                <div class="price-row">
+                  <span>商品原始小計</span>
+                  <span id="summary-subtotal">NT$ 0</span>
+                </div>
+                <div class="price-row discount-row">
+                  <span id="summary-discount-label">限時優惠折抵</span>
+                  <span id="summary-discount-amount">- NT$ 0</span>
+                </div>
+                <div class="price-row total-row">
+                  <span>優惠後預估總額</span>
+                  <strong id="summary-final-total">NT$ 0</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右側：聯絡暱稱、備註與明細輸出 -->
+          <div class="preorder-form-panel">
+            <h3>2. 填寫預購資訊並匯出明細</h3>
+
+            <form id="preorder-form" novalidate>
+              <div class="form-group">
+                <label for="customer-nickname" class="form-label">
+                  聯絡人暱稱 <span class="required-mark">*必填</span>
+                </label>
+                <input
+                  type="text"
+                  id="customer-nickname"
+                  class="form-input"
+                  placeholder="例如：苗栗小陳、造橋阿哲（請勿填寫真實身分證等個資）"
+                  maxlength="40"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="customer-note" class="form-label">取貨方式／備註（選填）</label>
+                <textarea
+                  id="customer-note"
+                  class="form-textarea"
+                  rows="2"
+                  placeholder="例如：希望週五頭份尚順周邊面交／常溫箱購寄送／需要冰鎮提袋..."
+                  maxlength="200"
+                ></textarea>
+              </div>
+
+              <!-- 友善驗證錯誤提示 -->
+              <div id="preorder-alert" class="preorder-alert" role="alert" hidden></div>
+
+              <div class="form-group">
+                <label for="order-summary-preview" class="form-label">預購明細文字預覽</label>
+                <textarea
+                  id="order-summary-preview"
+                  class="form-textarea summary-preview-box"
+                  rows="9"
+                  readonly
+                  aria-label="預購明細純文字預覽"
+                ></textarea>
+              </div>
+
+              <div class="export-actions">
+                <button type="button" id="copy-summary-btn" class="btn btn-primary">複製明細</button>
+                <button type="button" id="download-txt-btn" class="btn btn-secondary">下載 .txt</button>
+              </div>
+
+              <p id="export-feedback" class="export-feedback" aria-live="polite"></p>
+            </form>
+
+            <div class="social-order-guide">
+              <h4>📲 下一步：貼上明細完成登記（示例管道）</h4>
+              <p>複製文字或下載檔案後，請直接私訊貼給我們，小編將為您保留現貨：</p>
+              <div class="social-badges">
+                <span class="social-badge">💬 官方 LINE：<strong>@yudalohas-demo</strong>（示例）</span>
+                <span class="social-badge">📸 官方 IG：<strong>@yuda.lohas.demo</strong>（示例）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯絡資訊區塊 -->
+    <section id="contact" class="section contact-section">
+      <div class="container contact-grid">
+        <div>
+          <span class="section-tag">CONTACT US</span>
+          <h2 class="section-title">聯絡育達樂活團隊</h2>
+          <p class="section-lead">校園社團贊助、苗栗在地店家寄售合作或團購洽詢，歡迎隨時與我們聯繫！（以下聯絡資訊均為品牌示例）</p>
+        </div>
+
+        <div class="contact-card">
+          <ul class="contact-list">
+            <li><strong>品牌名稱：</strong>育達樂活能量飲 YUDA LOHAS Energy</li>
+            <li><strong>苗栗推廣據點（示例）：</strong>苗栗縣造橋鄉談文村學府路 168 號（青年創新實驗室示例址）</li>
+            <li><strong>客服專線（示例）：</strong>(037) 651-000（週一至週五 09:30–18:00）</li>
+            <li><strong>合作信箱（示例）：</strong>hello@yuda-lohas.example.com</li>
+            <li><strong>官方社群（示例）：</strong>LINE <code>@yudalohas-demo</code> ｜ IG <code>@yuda.lohas.demo</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-title">⚡ 育達樂活能量飲 YUDA LOHAS｜能量補充在舉手之間</p>
+        <p class="footer-disclaimer">
+          飲用提醒：請依個人體質適量飲用。本網站為品牌展示與前端互動示範專案，站內標註之活動折扣、營養數據、顧客評價與聯絡管道均為<strong>示例資料</strong>，不涉及真實金流交易。
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="#top">回到頂部 ↑</a>
+        <a href="#catalog">商品型錄</a>
+        <a href="#preorder">預購清單</a>
+      </div>
+      <p class="footer-copy">© 2026 育達樂活能量飲 YUDA LOHAS Energy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 商品詳情彈窗 Modal（可按 Esc 或點背景遮罩關閉，內容以 textContent 填入） -->
+  <div
+    id="product-modal"
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-product-title"
+    hidden
+  >
+    <div class="modal-dialog">
+      <button type="button" id="modal-close-btn" class="modal-close-btn" aria-label="關閉商品詳情視窗">✕</button>
+
+      <div class="modal-body">
+        <div class="modal-img-wrap">
+          <img id="modal-product-img" src="" alt="" class="modal-img">
+        </div>
+
+        <div class="modal-content">
+          <span id="modal-product-category" class="product-cat-badge"></span>
+          <h3 id="modal-product-title" class="modal-title"></h3>
+          <p id="modal-product-spec" class="modal-spec"></p>
+          <p id="modal-product-price" class="modal-price"></p>
+          <p id="modal-product-short" class="modal-short-desc"></p>
+          <hr class="modal-divider">
+          <p id="modal-product-full" class="modal-full-desc"></p>
+
+          <div class="modal-actions">
+            <button type="button" id="modal-add-cart-btn" class="btn btn-primary">＋ 加入預購清單</button>
+            <button type="button" id="modal-secondary-close-btn" class="btn btn-secondary">關閉視窗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入本地資料與主程式 -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

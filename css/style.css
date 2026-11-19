@@ -1,0 +1,1620 @@
+/* ==========================================================================
+   育達樂活能量飲 (YUDA LOHAS Energy) 主樣式表
+   遵循 AGENTS.md：
+   1. 使用 CSS 變數集中管理品牌色與設計系統
+   2. Mobile-First 先考慮手機版，再漸進擴充桌面版
+   3. 強化 :focus-visible 確保所有按鈕與互動元件支援清晰鍵盤操作
+   ========================================================================== */
+
+:root {
+  /* 品牌核心色系 */
+  --brand-primary: #ff5a1f;
+  --brand-primary-hover: #e04812;
+  --brand-primary-soft: #fff1eb;
+  --brand-secondary: #00a884;
+  --brand-secondary-soft: #e6f7f3;
+  --brand-accent: #ffd166;
+  --brand-dark: #0b1d24;
+  --brand-dark-elevated: #132d38;
+
+  /* 介面背景與文字色 */
+  --bg-page: #f6f9fb;
+  --bg-surface: #ffffff;
+  --bg-muted: #edf2f6;
+  --text-primary: #102027;
+  --text-secondary: #4a606a;
+  --text-inverse: #f8fafc;
+  --border-color: #d7e2e8;
+
+  /* 狀態回饋色 */
+  --status-success: #0d8a6a;
+  --status-danger: #d93829;
+  --status-danger-bg: #fef2f2;
+  --status-expired: #64748b;
+
+  /* 圓角、陰影與無障礙焦點外框 */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 2px 8px rgba(11, 29, 36, 0.06);
+  --shadow-md: 0 10px 28px rgba(11, 29, 36, 0.1);
+  --shadow-lg: 0 20px 48px rgba(11, 29, 36, 0.22);
+  --focus-ring: 0 0 0 3px rgba(255, 90, 31, 0.45);
+
+  /* 字體設定（臺灣繁體中文最佳化系統字體堆疊） */
+  --font-sans: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 基礎重設 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 確保 [hidden] 永遠生效 */
+[hidden] {
+  display: none !important;
+}
+
+/* 全域鍵盤無障礙焦點樣式 */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
+}
+
+/* 跳至主要內容連結 */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 1000;
+  background: var(--brand-primary);
+  color: #ffffff;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.15rem;
+}
+
+/* ==========================================================================
+   按鈕系統（符合手機觸控 >= 44px 高度與鍵盤友善操作）
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.65rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.98rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-lg {
+  min-height: 48px;
+  padding: 0.78rem 1.65rem;
+  font-size: 1.05rem;
+}
+
+.btn-sm {
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--bg-muted);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: #dfe8ee;
+}
+
+.btn-outline-light {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-inverse);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-color: #ffffff;
+}
+
+/* ==========================================================================
+   頂部限時活動橫幅 (Mobile-First)
+   ========================================================================== */
+.promo-banner {
+  background: linear-gradient(90deg, #102a36 0%, #193c4a 50%, #102a36 100%);
+  color: var(--text-inverse);
+  border-bottom: 2px solid var(--brand-primary);
+  padding: 0.65rem 0;
+}
+
+.promo-banner.is-expired {
+  background: #334155;
+  border-bottom-color: var(--status-expired);
+}
+
+.promo-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: center;
+}
+
+.promo-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.promo-status-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.promo-banner.is-expired .promo-status-badge {
+  background-color: var(--status-expired);
+}
+
+.promo-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.promo-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.time-box {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.2rem 0.48rem;
+  border-radius: 6px;
+}
+
+.time-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: var(--brand-accent);
+}
+
+.time-unit {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.time-sep {
+  font-weight: 700;
+  opacity: 0.65;
+}
+
+.promo-code-group {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.promo-code-label {
+  font-size: 0.88rem;
+}
+
+.promo-code-label strong {
+  color: var(--brand-accent);
+  letter-spacing: 0.05em;
+  font-size: 0.96rem;
+}
+
+.btn-promo-copy {
+  min-height: 36px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.84rem;
+  background-color: var(--brand-accent);
+  color: #102027;
+}
+
+.btn-promo-copy:hover {
+  background-color: #ffca47;
+}
+
+.btn-promo-copy:disabled {
+  background-color: #94a3b8;
+  color: #f1f5f9;
+  cursor: not-allowed;
+}
+
+.promo-feedback {
+  margin: 0;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--brand-accent);
+}
+
+.promo-feedback:not(:empty) {
+  margin-top: 0.35rem;
+}
+
+/* ==========================================================================
+   導覽列與手機版漢堡選單 (Mobile-First)
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background-color: rgba(11, 29, 36, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 66px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--text-inverse);
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--brand-primary), #ff8a3d);
+  font-size: 1.25rem;
+}
+
+.logo-text-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.logo-zh {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.logo-en {
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: #94bac8;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-pill);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-inverse);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.cart-pill:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.cart-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.45rem 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-inverse);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hamburger-bar {
+  display: none;
+}
+
+/* 手機版選單預設收合 */
+.primary-nav {
+  display: none;
+  width: 100%;
+  padding: 0.75rem 0 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 0.5rem;
+}
+
+.primary-nav.is-open {
+  display: block;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-inverse);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--brand-accent);
+}
+
+/* ==========================================================================
+   首屏 Hero 區塊 (Mobile-First)
+   ========================================================================== */
+.hero-section {
+  background: radial-gradient(circle at 75% 35%, #193b47 0%, var(--brand-dark) 70%);
+  color: var(--text-inverse);
+  padding: 2.5rem 0 3rem;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  margin: 0 0 0.85rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(0, 168, 132, 0.22);
+  border: 1px solid rgba(0, 210, 165, 0.45);
+  color: #6fffe0;
+  border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.hero-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2.1rem, 7vw, 3.4rem);
+  line-height: 1.18;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.text-highlight {
+  color: var(--brand-accent);
+}
+
+.hero-subtitle {
+  margin: 0 0 1.65rem;
+  font-size: 1.04rem;
+  color: #d2e3ea;
+  max-width: 56ch;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 0;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.stat-item dt {
+  font-size: 0.78rem;
+  color: #9ec0cd;
+}
+
+.stat-item dd {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.hero-visual {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   通用區塊排版
+   ========================================================================== */
+.section {
+  padding: 3.5rem 0;
+}
+
+.section-header {
+  max-width: 720px;
+  margin: 0 auto 2.25rem;
+  text-align: center;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--brand-primary);
+  background-color: var(--brand-primary-soft);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.25rem);
+  line-height: 1.28;
+}
+
+.section-lead {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   品牌故事區塊
+   ========================================================================== */
+.story-section {
+  background-color: var(--bg-surface);
+}
+
+.story-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.story-card {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.65rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.story-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.story-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.story-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   商品型錄區塊（搜尋 + 分類篩選 + 卡片）
+   ========================================================================== */
+.catalog-controls {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.search-label,
+.filter-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+  color: var(--text-primary);
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.6rem 2.6rem 0.6rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.btn-clear-input {
+  position: absolute;
+  right: 0.4rem;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-clear-input:hover {
+  background-color: var(--bg-muted);
+  color: var(--text-primary);
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cat-btn {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-color);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.cat-btn:hover {
+  border-color: var(--brand-primary);
+}
+
+.cat-btn.is-active {
+  background-color: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: #ffffff;
+}
+
+.catalog-result-info {
+  margin: 0 0 1.25rem;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+}
+
+.product-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-img-box {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-color: var(--brand-dark);
+  overflow: hidden;
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.04);
+}
+
+.product-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-meta-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.product-cat-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  font-weight: 700;
+  background-color: var(--brand-secondary-soft);
+  color: #007a60;
+}
+
+.product-price {
+  font-size: 1.22rem;
+  font-weight: 900;
+  color: var(--brand-primary);
+}
+
+.product-name {
+  margin: 0 0 0.3rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.product-spec {
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.product-short-desc {
+  margin: 0 0 1.2rem;
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.product-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.empty-state {
+  background-color: var(--bg-surface);
+  border: 1.5px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem;
+}
+
+.empty-title {
+  margin: 0 0 0.45rem;
+}
+
+.empty-desc {
+  margin: 0 auto 1.25rem;
+  max-width: 44ch;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   顧客口碑評價區塊
+   ========================================================================== */
+.reviews-section {
+  background-color: var(--bg-surface);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.review-card {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.review-stars {
+  color: #f59e0b;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+}
+
+.review-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-primary-soft);
+  color: var(--brand-primary);
+}
+
+.review-comment {
+  margin: 0;
+  font-size: 0.96rem;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.review-footer {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.review-author {
+  font-weight: 700;
+  color: var(--text-primary);
+  display: block;
+}
+
+/* ==========================================================================
+   常見問題 FAQ 區塊（鍵盤友善手風琴）
+   ========================================================================== */
+.faq-container {
+  max-width: 840px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.faq-item {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.faq-question-btn {
+  width: 100%;
+  min-height: 56px;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.faq-question-btn:hover {
+  background-color: rgba(11, 29, 36, 0.025);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--bg-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.faq-question-btn[aria-expanded="true"] .faq-icon {
+  transform: rotate(45deg);
+  background-color: var(--brand-primary);
+  color: #ffffff;
+}
+
+.faq-answer {
+  padding: 0 1.25rem 1.25rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--bg-muted);
+  padding-top: 0.9rem;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+/* ==========================================================================
+   預購清單與明細產生器 (Mobile-First)
+   ========================================================================== */
+.preorder-section {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+}
+
+.preorder-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.preorder-cart-panel,
+.preorder-form-panel {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.panel-head h3,
+.preorder-form-panel h3 {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+}
+
+.panel-head h3 {
+  margin-bottom: 0;
+}
+
+.btn-text-danger {
+  min-height: 38px;
+  padding: 0.35rem 0.75rem;
+  background: transparent;
+  border: 1px solid #f3c1bc;
+  color: var(--status-danger);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-text-danger:hover {
+  background-color: var(--status-danger-bg);
+}
+
+.cart-empty-msg {
+  padding: 2rem 1rem;
+  text-align: center;
+  background-color: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.2rem;
+}
+
+.cart-empty-msg p {
+  margin: 0 0 0.85rem;
+  color: var(--text-secondary);
+}
+
+.cart-items-list {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cart-item {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cart-item-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cart-item-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.cart-item-unit {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-page);
+}
+
+.qty-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background-color: var(--bg-muted);
+}
+
+.qty-value {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-item-subtotal {
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.btn-remove-item {
+  min-height: 38px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  color: var(--status-danger);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-remove-item:hover {
+  background-color: var(--status-danger-bg);
+  border-color: #f3c1bc;
+}
+
+.cart-pricing-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+
+.coupon-row {
+  padding-bottom: 0.9rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.coupon-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.coupon-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.coupon-input {
+  flex: 1;
+  min-height: 40px;
+  padding: 0.4rem 0.75rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+.coupon-status-msg {
+  margin: 0.4rem 0 0;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--status-success);
+}
+
+.coupon-status-msg.is-error {
+  color: var(--status-danger);
+}
+
+.price-summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discount-row {
+  color: var(--status-success);
+  font-weight: 600;
+}
+
+.total-row {
+  margin-top: 0.45rem;
+  padding-top: 0.65rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 1.12rem;
+}
+
+.total-row strong {
+  font-size: 1.38rem;
+  color: var(--brand-primary);
+}
+
+/* 表單與明細匯出 */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.required-mark {
+  color: var(--status-danger);
+  font-size: 0.8rem;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.96rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.form-input {
+  min-height: 46px;
+}
+
+.summary-preview-box {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  background-color: #f8fafc;
+  resize: vertical;
+}
+
+.preorder-alert {
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--status-danger-bg);
+  border: 1px solid #f5b7b1;
+  color: var(--status-danger);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.export-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.export-feedback {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--status-success);
+}
+
+.social-order-guide {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background-color: var(--brand-secondary-soft);
+  border-radius: var(--radius-sm);
+  border: 1px solid #b5e8dc;
+}
+
+.social-order-guide h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.96rem;
+}
+
+.social-order-guide p {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.social-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+}
+
+/* ==========================================================================
+   聯絡資訊與頁尾
+   ========================================================================== */
+.contact-section {
+  background-color: var(--bg-page);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.contact-section .section-title,
+.contact-section .section-lead {
+  text-align: left;
+}
+
+.contact-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+}
+
+.site-footer {
+  background-color: var(--brand-dark);
+  color: #cbd5e1;
+  padding: 2.5rem 0;
+  font-size: 0.9rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.footer-title {
+  margin: 0 0 0.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 1.02rem;
+}
+
+.footer-disclaimer {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #94a3b8;
+  max-width: 75ch;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.footer-links a {
+  color: var(--brand-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   商品詳情彈窗 Modal
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background-color: rgba(11, 29, 36, 0.76);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(11, 29, 36, 0.72);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  background-color: var(--brand-primary);
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.modal-img-wrap {
+  background-color: var(--brand-dark);
+  aspect-ratio: 4 / 3;
+}
+
+.modal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: 1.5rem;
+}
+
+.modal-title {
+  margin: 0.5rem 0 0.3rem;
+  font-size: 1.5rem;
+}
+
+.modal-spec {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.modal-price {
+  margin: 0 0 0.85rem;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--brand-primary);
+}
+
+.modal-short-desc {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-divider {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 1rem 0;
+}
+
+.modal-full-desc {
+  margin: 0 0 1.5rem;
+  color: var(--text-secondary);
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   響應式斷點擴充（Tablet >= 768px & Desktop >= 1024px）
+   ========================================================================== */
+@media (min-width: 768px) {
+  .promo-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .story-cards,
+  .reviews-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .catalog-controls {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .search-box {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-body {
+    grid-template-columns: 1fr 1.1fr;
+  }
+
+  .modal-img-wrap {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr 1.15fr;
+  }
+
+  .footer-inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (min-width: 960px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .header-actions {
+    order: 3;
+  }
+
+  .primary-nav {
+    display: block;
+    width: auto;
+    border-top: none;
+    margin-top: 0;
+    padding: 0;
+    order: 2;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .hero-section {
+    padding: 4rem 0 4.5rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1.05fr 1.15fr;
+    gap: 2.75rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .preorder-layout {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 2rem;
+  }
+}
