@@ -7,7 +7,7 @@
 
 ## 🌐 正式網站網址
 
-- **正式網址（Production URL）**：`https://yuda-lohas-energy.vercel.app/` *(部署至 Vercel 後，請確認或替換為您專案實際派發之正式網址)*
+- **正式網址（Production URL）**：https://yuda-lohas-energy.vercel.app/
 
 ---
 
